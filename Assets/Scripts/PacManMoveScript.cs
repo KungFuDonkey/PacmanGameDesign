@@ -17,6 +17,7 @@ public class PacManMoveScript : MonoBehaviour
     public TextMeshProUGUI score;
     public GameObject GameManager;
     public Vector2 startPos;
+    public bool powerPelletEaten;
     private bool poweredUp;
     [HideInInspector]
     public float timeSpent;
@@ -115,11 +116,17 @@ public class PacManMoveScript : MonoBehaviour
     {
         if (collision.tag == "PowerPellet")
         {
-            GameManager.GetComponent<GameManagerScript>().PowerPelletCollected();
-            GameManager.GetComponent<GameManagerScript>().powerPelletsCollected += 1;
+            if(Random.Range(0,101) >= 85){
+                powerPelletEaten = true;
+                GameManager.GetComponent<GameManagerScript>().PowerPelletCollected();
+                GameManager.GetComponent<GameManagerScript>().powerPelletsCollected += 1;
 
-            score.GetComponent<ScoreScript>().ScorePowerPellet();
-            StartCoroutine(GameManager.GetComponent<GameManagerScript>().CheckForGameEnd());
+                score.GetComponent<ScoreScript>().ScorePowerPellet();
+                StartCoroutine(GameManager.GetComponent<GameManagerScript>().CheckForGameEnd());
+            }
+            else{
+                powerPelletEaten = false;
+            }
         }
 
         if (collision.tag == "Pellet")
