@@ -18,13 +18,14 @@ public class PacManMoveScript : MonoBehaviour
     public GameObject GameManager;
     public Vector2 startPos;
     private bool poweredUp;
-
     [HideInInspector]
     public float timeSpent;
-
+    public float slowTimer = 0f, SLOWTIMER = 4f;
     void Start()
     {
         startPos = new Vector2(15, 8);
+        movespeed = 0.3f;
+        slowTimer = 0f;
         //GameManager.GetComponent<GameManagerScript>().ResetGame += StartGame;
         destination = transform.position;
     }
@@ -33,6 +34,15 @@ public class PacManMoveScript : MonoBehaviour
     void FixedUpdate()
     {
         // Come up with better name for 'p'
+        if(slowTimer > 0)
+        {
+            slowTimer -= Time.deltaTime;
+            movespeed = 0.15f;
+        }
+        else
+        {
+            movespeed = 0.3f;
+        }
         Vector2 p = Vector2.MoveTowards(transform.position, destination, movespeed);
         GetComponent<Rigidbody2D>().MovePosition(p);
 
@@ -44,7 +54,7 @@ public class PacManMoveScript : MonoBehaviour
             if (Input.GetKey(KeyCode.RightArrow) && valid(Vector2.right))
                 destination = (Vector2)transform.position + Vector2.right;
             if (Input.GetKey(KeyCode.DownArrow) && valid(-Vector2.up))
-                destination = (Vector2)transform.position - Vector2.up;
+                destination = (Vector2)transform.position - Vector2.up ;
             if (Input.GetKey(KeyCode.LeftArrow) && valid(-Vector2.right))
                 destination = (Vector2)transform.position - Vector2.right;
         }
@@ -136,7 +146,10 @@ public class PacManMoveScript : MonoBehaviour
             gameObject.transform.position = tp;
         }
     }
-
+    public void slowed()
+    {
+        slowTimer = SLOWTIMER;
+    }
     public void ResetGame()
     {
         gameObject.transform.position = startPos;

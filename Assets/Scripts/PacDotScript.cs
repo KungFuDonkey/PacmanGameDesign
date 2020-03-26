@@ -8,7 +8,6 @@ public class PacDotScript : MonoBehaviour
         if (co.name == "PacMan")
         {
             Destroy(gameObject);
-        }
-                
+        }  
     }
 }

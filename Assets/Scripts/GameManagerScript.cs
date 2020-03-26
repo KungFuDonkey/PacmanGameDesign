@@ -172,10 +172,17 @@ public class GameManagerScript : MonoBehaviour
     //Sets ghosts to scared behaviour for 8 seconds
     public void PowerPelletCollected()
     {
-        StartCoroutine(Blinky.GetComponent<BlinkyScript>().Frightened(8));
-        StartCoroutine(Inky.GetComponent<InkyScript>().Frightened(8));
-        StartCoroutine(Pinky.GetComponent<PinkyScript>().Frightened(8));
-        StartCoroutine(Clyde.GetComponent<ClydeScript>().Frightened(8));
+        if(Random.Range(0,1f) > 0.5f)
+        {
+            StartCoroutine(Blinky.GetComponent<BlinkyScript>().Frightened(8));
+            StartCoroutine(Inky.GetComponent<InkyScript>().Frightened(8));
+            StartCoroutine(Pinky.GetComponent<PinkyScript>().Frightened(8));
+            StartCoroutine(Clyde.GetComponent<ClydeScript>().Frightened(8));
+        }
+        else
+        {
+            PacMan.GetComponent<PacManMoveScript>().slowed();
+        }
     }
 
     public void InitializeLives()
