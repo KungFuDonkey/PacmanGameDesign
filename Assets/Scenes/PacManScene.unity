@@ -20278,9 +20278,9 @@ GameObject:
   - component: {fileID: 1329145729}
   - component: {fileID: 1329145728}
   - component: {fileID: 1329145733}
-  - component: {fileID: 1329145732}
   - component: {fileID: 1329145731}
   - component: {fileID: 1329145734}
+  - component: {fileID: 1329145732}
   m_Layer: 8
   m_Name: PacMan
   m_TagString: Untagged
@@ -20395,8 +20395,10 @@ MonoBehaviour:
   GameManager: {fileID: 1334309640}
   startPos: {x: 0, y: 0}
   timeSpent: 0
---- !u!58 &1329145732
-CircleCollider2D:
+  slowTimer: 0
+  SLOWTIMER: 4
+--- !u!61 &1329145732
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -20405,12 +20407,22 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2, y: 2}
+    newSize: {x: 2, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.95
+  m_Size: {x: 1.9, y: 1.9}
+  m_EdgeRadius: 0
 --- !u!50 &1329145733
 Rigidbody2D:
   serializedVersion: 4
