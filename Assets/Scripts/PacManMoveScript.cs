@@ -17,11 +17,12 @@ public class PacManMoveScript : MonoBehaviour
     public TextMeshProUGUI score;
     public GameObject GameManager;
     public Vector2 startPos;
-    public bool powerPelletEaten;
-    private bool poweredUp;
     [HideInInspector]
     public float timeSpent;
     public float slowTimer = 0f, SLOWTIMER = 4f;
+    public GameObject Dots;
+    private List<Vector3> locations = new List<Vector3>();
+
     void Start()
     {
         startPos = new Vector2(15, 8);
@@ -29,6 +30,10 @@ public class PacManMoveScript : MonoBehaviour
         slowTimer = 0f;
         //GameManager.GetComponent<GameManagerScript>().ResetGame += StartGame;
         destination = transform.position;
+        foreach (Transform child in Dots.transform)
+        {
+            locations.Add(child.transform.position);
+        }
     }
 
     // Update is called once per frame
@@ -37,7 +42,7 @@ public class PacManMoveScript : MonoBehaviour
         // Come up with better name for 'p'
         if(slowTimer > 0)
         {
-            slowTimer -= Time.deltaTime;
+            slowTimer -= Time.fixedDeltaTime;
             movespeed = 0.15f;
         }
         else
@@ -63,7 +68,7 @@ public class PacManMoveScript : MonoBehaviour
         //works for now, counts moving in a wall as moving
         if ((Vector2)transform.position == destination && !Input.anyKey)
         {
-            timeSpent += Time.deltaTime;
+            timeSpent += Time.fixedDeltaTime;
         }
 
 
@@ -114,39 +119,43 @@ public class PacManMoveScript : MonoBehaviour
     //Determines what happens when collided with. PacMan increases score when eating pellets, powers up due to power pellets and dies to ghosts
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "PowerPellet")
+        if (collision.CompareTag("PowerPellet"))
         {
-            if(Random.Range(0,101) >= 85){
-                powerPelletEaten = true;
+            if(Random.Range(0, 100) >= 50)
+            {
                 GameManager.GetComponent<GameManagerScript>().PowerPelletCollected();
                 GameManager.GetComponent<GameManagerScript>().powerPelletsCollected += 1;
 
+                Destroy(collision.gameObject);
                 score.GetComponent<ScoreScript>().ScorePowerPellet();
                 StartCoroutine(GameManager.GetComponent<GameManagerScript>().CheckForGameEnd());
             }
-            else{
-                powerPelletEaten = false;
+            else
+            {
+                int randomIndex = Random.Range(0, locations.Count);
+                Vector3 newPosition = locations[randomIndex];
+                collision.transform.position = newPosition;
             }
         }
 
-        if (collision.tag == "Pellet")
+        if (collision.CompareTag("Pellet"))
         {
             GameManager.GetComponent<GameManagerScript>().pelletsCollected += 1;
             score.GetComponent<ScoreScript>().ScorePellet();
             StartCoroutine(GameManager.GetComponent<GameManagerScript>().CheckForGameEnd());
         }
-        if (collision.tag == "Ghost" && collision.gameObject.GetComponent<GhostBehaviourScript>().frightened)
+        if (collision.CompareTag("Ghost") && collision.gameObject.GetComponent<GhostBehaviourScript>().frightened)
         {
             score.GetComponent<ScoreScript>().ScoreGhost();
         }
 
-        if (collision.name == "TeleportLeft")
+        if (collision.CompareTag("TeleportLeft"))
         {
             Vector2 tp = new Vector2(27, 17);
             destination = tp;
             gameObject.transform.position = tp;
         }
-        if (collision.name == "TeleportRight")
+        if (collision.CompareTag("TeleportRight"))
         {
             Vector2 tp = new Vector2(2, 17);
             destination = tp;
