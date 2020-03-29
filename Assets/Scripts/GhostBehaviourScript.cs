@@ -48,7 +48,7 @@ public class GhostBehaviourScript : MonoBehaviour
         }
         else
         {
-            Move(gameObject.transform.position, destination, validTileList);
+            Move(gameObject.transform.position);
         }
         
         //Sets variables so that the correct animation shows
@@ -132,7 +132,7 @@ public class GhostBehaviourScript : MonoBehaviour
     }
 
     //Moves the ghost along the two waypoints
-    void Move(Vector2 currentPos, Vector2 destination, List<Vector2> validTileList)
+    void Move(Vector2 currentPos)
     {
         currentDir = path[waypointIndex] - (Vector2)transform.position;
         if ((Vector2)transform.position != path[waypointIndex])

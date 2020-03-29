@@ -8,6 +8,8 @@ TagManager:
   - PowerPellet
   - Pellet
   - Maze
+  - TeleportLeft
+  - TeleportRight
   layers:
   - Default
   - TransparentFX
