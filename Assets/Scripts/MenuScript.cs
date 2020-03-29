@@ -16,4 +16,14 @@ public class MenuScript : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
+
+    public void Credits()
+    {
+        SceneManager.LoadScene(2);
+    }
+
+    public void BackToMain()
+    {
+        SceneManager.LoadScene(0);
+    }
 }

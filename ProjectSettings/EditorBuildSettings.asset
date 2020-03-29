@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PacManScene.unity
     guid: 9606f279c4cae99478f18baf9039612c
+  - enabled: 1
+    path: Assets/Scenes/CreditsScene.unity
+    guid: 8f4ea27c9bd6348499421f12040ccd68
   m_configObjects: {}
