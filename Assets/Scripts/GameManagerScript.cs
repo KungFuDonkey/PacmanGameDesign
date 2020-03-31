@@ -11,6 +11,7 @@ public class GameManagerScript : MonoBehaviour
     public GameObject Pinky;
     public GameObject Clyde;
     public GameObject PacMan;
+    public GameObject GameOverScreen;
 
     [HideInInspector]
     public int pelletsCollected { get; set; }
@@ -124,8 +125,20 @@ public class GameManagerScript : MonoBehaviour
         }
         else
         {
-            //GameOverSequence
+            StartCoroutine(GameOverSequence());
         }
+    }
+
+    public IEnumerator GameOverSequence()
+    {
+        PacMan.GetComponent<PacManMoveScript>().enabled = false;
+        Blinky.GetComponent<BlinkyScript>().enabled = false;
+        Pinky.GetComponent<PinkyScript>().enabled = false;
+        Inky.GetComponent<InkyScript>().enabled = false;
+        Clyde.GetComponent<ClydeScript>().enabled = false;
+        GameOverScreen.SetActive(true);
+        yield return new WaitForSeconds(5);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     //Starts the deathsequence which resets all ghost positions and restarts the startgamesequence
@@ -201,11 +214,21 @@ public class GameManagerScript : MonoBehaviour
     {
         if(pelletsCollected == 240 && powerPelletsCollected == 4)
         {
-            //TODO: Stop all movement
+            PacMan.GetComponent<PacManMoveScript>().enabled = false;
+            Blinky.GetComponent<BlinkyScript>().enabled = false;
+            Pinky.GetComponent<PinkyScript>().enabled = false;
+            Inky.GetComponent<InkyScript>().enabled = false;
+            Clyde.GetComponent<ClydeScript>().enabled = false;
             victorySound.Play();
             yield return new WaitForSeconds(5);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+        yield break;
+    }
+
+    public IEnumerator LoadScene(int scene)
+    {
+        SceneManager.LoadScene(scene);
         yield break;
     }
 }

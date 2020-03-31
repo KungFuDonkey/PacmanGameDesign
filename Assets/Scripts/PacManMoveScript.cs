@@ -39,6 +39,10 @@ public class PacManMoveScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            StartCoroutine(GameManager.GetComponent<GameManagerScript>().LoadScene(0));
+        }
         // Come up with better name for 'p'
         if(slowTimer > 0)
         {
@@ -73,7 +77,7 @@ public class PacManMoveScript : MonoBehaviour
 
 
         //To Fix: Plays on awake, stops/starts a lot (turned off because annoying)
-            if ((Vector2)transform.position == destination && (Input.GetKey("up")))
+        if ((Vector2)transform.position == destination && (Input.GetKey("up")))
         {
             //chomp.Play();
         }
@@ -162,10 +166,12 @@ public class PacManMoveScript : MonoBehaviour
             gameObject.transform.position = tp;
         }
     }
+
     public void slowed()
     {
         slowTimer = SLOWTIMER;
     }
+
     public void ResetGame()
     {
         gameObject.transform.position = startPos;
