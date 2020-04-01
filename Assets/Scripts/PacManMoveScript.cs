@@ -125,7 +125,7 @@ public class PacManMoveScript : MonoBehaviour
     {
         if (collision.CompareTag("PowerPellet"))
         {
-            if(Random.Range(0, 100) >= 50)
+            if(Random.Range(0, 100) >= 75)
             {
                 GameManager.GetComponent<GameManagerScript>().PowerPelletCollected();
                 GameManager.GetComponent<GameManagerScript>().powerPelletsCollected += 1;
